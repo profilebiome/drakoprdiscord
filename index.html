@@ -15,7 +15,7 @@
       --violet:    #9C84EF;
       --glow:      #7289DA;
       --deep:      #1a1a2e;
-      --border:    rgba(88,101,242,0.25);
+      --border:    rgba(88,101,242,0.15);
       --text:      #e8eaf6;
       --muted:     #8b8fa8;
       --white:     #ffffff;
@@ -41,35 +41,6 @@
       pointer-events: none;
     }
 
-    /* ── NAVEGACIÓN ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 clamp(1.5rem, 5vw, 4rem);
-      height: 72px;
-      background: rgba(6,6,8,0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: var(--white);
-      letter-spacing: 1px;
-    }
-
-    .nav-logo svg { width: 28px; height: 28px; }
-
     /* ── SECCIÓN PRINCIPAL (HERO MODERNO) ── */
     .hero {
       position: relative;
@@ -80,35 +51,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 100px clamp(1.5rem, 6vw, 4rem) 60px;
-    }
-
-    .hero-badge {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--violet);
-      background: rgba(156, 132, 239, 0.1);
-      border: 1px solid rgba(156, 132, 239, 0.3);
-      padding: 8px 16px;
-      border-radius: 50px;
-      margin-bottom: 1.5rem;
-      animation: fadeDown 0.8s 0.1s ease both;
-    }
-
-    .main-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.5rem, 8vw, 5.5rem);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 30%, #9C84EF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1rem;
-      filter: drop-shadow(0 10px 30px rgba(88,101,242,0.2));
-      animation: fadeDown 0.8s 0.2s ease both;
+      padding: 60px clamp(1.5rem, 6vw, 4rem);
     }
 
     /* ── ECUALIZADOR ANIMADO ── */
@@ -117,7 +60,7 @@
       align-items: flex-end;
       gap: 6px;
       height: 60px;
-      margin: 2rem 0;
+      margin: 2rem 0 1.5rem 0;
       animation: fadeDown 0.8s 0.3s ease both;
     }
 
@@ -134,9 +77,28 @@
       to   { height: var(--h, 40px); opacity: 1; }
     }
 
-    /* ── BOTÓN DE ACCIÓN (CTA) ── */
+    /* ── ESTILO URBANO PROFESIONAL ── */
+    .urban-header {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeDown 0.8s 0.35s ease both;
+      user-select: none;
+    }
+
+    .urban-header .main-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 0.95;
+      display: block;
+    }
+
+    /* ── BOTÓN DE ACCIÓN (CTA) MODIFICADO ── */
     .cta-wrap {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 4rem;
       animation: fadeDown 0.8s 0.4s ease both;
     }
 
@@ -144,18 +106,32 @@
       position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       background: linear-gradient(135deg, #5865F2, #9C84EF);
       color: #fff;
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: 1.1rem;
-      padding: 18px 44px;
-      border-radius: 16px;
+      font-size: 0.9rem; /* Más pequeño */
+      padding: 12px 28px; /* Más pequeño */
+      border-radius: 12px; /* Más compacto */
       text-decoration: none;
-      box-shadow: 0 0 40px rgba(88,101,242,0.3), 0 8px 24px rgba(0,0,0,0.4);
+      border: 2px solid #210042; /* Borde violeta oscuro inicial */
+      box-shadow: 0 0 15px rgba(33, 0, 66, 0.4), 0 6px 16px rgba(0,0,0,0.4);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       overflow: hidden;
+      animation: parpadeoBorde 1.5s infinite ease-in-out; /* Parpadeo del borde */
+    }
+
+    /* Animación de parpadeo violeta oscuro */
+    @keyframes parpadeoBorde {
+      0%, 100% {
+        border-color: #210042;
+        box-shadow: 0 0 8px rgba(33, 0, 66, 0.5), 0 6px 16px rgba(0,0,0,0.4);
+      }
+      50% {
+        border-color: #5d00b8; /* Enciende a violeta oscuro vibrante */
+        box-shadow: 0 0 20px rgba(93, 0, 184, 0.8), 0 6px 16px rgba(0,0,0,0.4);
+      }
     }
 
     .btn-cta::after {
@@ -168,36 +144,82 @@
     }
 
     .btn-cta:hover { 
-      transform: translateY(-4px); 
-      box-shadow: 0 0 60px rgba(88,101,242,0.5), 0 12px 32px rgba(0,0,0,0.5); 
+      transform: translateY(-3px); 
     }
     .btn-cta:hover::after { opacity: 1; }
     .btn-cta:active { transform: translateY(0); }
 
-    .btn-cta svg { width: 24px; height: 24px; fill: #fff; flex-shrink: 0; position: relative; z-index: 2; }
-    .btn-cta span { position: relative; z-index: 2; }
+    .btn-cta svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; position: relative; z-index: 2; }
+    .btn-cta span { position: relative; z-index: 2; letter-spacing: 0.5px; }
 
-    /* ── PIE DE PÁGINA (FOOTER) ── */
-    footer {
-      position: relative; 
-      z-index: 1;
-      padding: 2rem clamp(1.5rem, 5vw, 4rem);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center; /* Centrado para estilo minimalista */
-      font-size: 0.9rem;
-      color: var(--muted);
-      background: rgba(6,6,8,0.4);
-      backdrop-filter: blur(10px);
+    /* ── RECUADROS DE ACTIVIDADES (GRID URBANO) ── */
+    .features-grid {
+      max-width: 1200px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+      animation: fadeDown 1s 0.5s ease both;
     }
 
-    footer .nav-logo { font-size: 1rem; color: var(--muted); }
-    footer .nav-logo svg { filter: grayscale(100%) opacity(0.7); }
+    .feature-card {
+      background: rgba(13, 13, 20, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      padding: 30px 24px;
+      border-radius: 20px;
+      text-align: left;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(156, 132, 239, 0.5);
+      background: rgba(20, 20, 30, 0.6);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(88,101,242,0.15);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(88, 101, 242, 0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--violet);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      background: var(--purple);
+      color: var(--white);
+      transform: scale(1.05);
+    }
+
+    .feature-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
 
     /* ── ANIMACIONES DE ELEMENTOS ── */
     @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -206,27 +228,7 @@
 
 <canvas id="bg-canvas"></canvas>
 
-<nav>
-  <div class="nav-logo">
-    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="32" height="32" rx="8" fill="url(#logoGrad)"/>
-      <path d="M10 20 Q12 10 16 14 Q20 18 22 8" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-      <circle cx="10" cy="20" r="2" fill="white"/>
-      <circle cx="22" cy="8" r="2" fill="white"/>
-      <defs>
-        <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
-          <stop offset="0%" stop-color="#5865F2"/>
-          <stop offset="100%" stop-color="#9C84EF"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    SERVER DRAKO
-  </div>
-</nav>
-
 <section class="hero">
-
-  <h1 class="main-title">Comunidad para Productores</h1>
 
   <div class="eq-wrap" aria-hidden="true">
     <div class="eq-bar" style="--h:22px;--d:0.7s"></div>
@@ -243,34 +245,70 @@
     <div class="eq-bar" style="--h:42px;--d:1.15s"></div>
   </div>
 
+  <header class="urban-header">
+    <span class="main-title">DRAKO SERVER</span>
+  </header>
+
   <div class="cta-wrap">
     <a href="https://discord.gg/AeMkphYHz" target="_blank" class="btn-cta">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 245 240">
         <path d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zm36.5 0c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"/>
         <path d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-.9 20.2-.1 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z"/>
       </svg>
-      <span>Acceder a Discord</span>
+      <span>DISCORD</span>
     </a>
   </div>
-</section>
 
-<footer>
-  <div class="nav-logo">
-    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-      <rect width="32" height="32" rx="8" fill="url(#logoGrad2)"/>
-      <path d="M10 20 Q12 10 16 14 Q20 18 22 8" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-      <circle cx="10" cy="20" r="2" fill="white"/>
-      <circle cx="22" cy="8" r="2" fill="white"/>
-      <defs>
-        <linearGradient id="logoGrad2" x1="0" y1="0" x2="32" y2="32">
-          <stop offset="0%" stop-color="#5865F2"/>
-          <stop offset="100%" stop-color="#9C84EF"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    SERVER DRAKO
+  <!-- ── RECUADROS DE CONTENIDO ── -->
+  <div class="features-grid">
+    
+    <!-- Tarjeta 1 -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 19v4M8 23h8"/></svg>
+      </div>
+      <h3>STREAMS</h3>
+      <p>Sesiones de producción en tiempo real. Observa, aprende e interactúa en el proceso creativo directo.</p>
+    </div>
+
+    <!-- Tarjeta 2 -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2zM12 11v6M9 14l3-3 3 3"/></svg>
+      </div>
+      <h3>RECURSOS</h3>
+      <p>Intercambio constante de Drum Kits, Sample Packs, Presets exclusivos y herramientas avanzadas de ingeniería.</p>
+    </div>
+
+    <!-- Tarjeta 3 -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Feedback Colectivo</h3>
+      <p>Sube tus proyectos y demos para recibir críticas profesionales e ideas constructivas de otros productores.</p>
+    </div>
+
+    <!-- Tarjeta 4 -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Colaboraciones</h3>
+      <p>Conecta con otros beatmakers, ingenieros, compositores y artistas para fusionar estilos y lanzar nuevos proyectos.</p>
+    </div>
+
+    <!-- Tarjeta 5 -->
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM14.5 9.5a2.5 2.5 0 0 0-5 0v5a2.5 2.5 0 0 0 5 0"/></svg>
+      </div>
+      <h3>Registro & Regalías</h3>
+      <p>Asesoramiento e información clara para registrar tus obras musicales de manera correcta y maximizar tus ingresos.</p>
+    </div>
+
   </div>
-</footer>
+</section>
 
 <script>
   const canvas = document.getElementById('bg-canvas');
@@ -316,7 +354,6 @@
   function loop() {
     ctx.clearRect(0, 0, W, H);
 
-    // Líneas sutiles de fondo
     ctx.strokeStyle = 'rgba(88,101,242,0.04)';
     ctx.lineWidth = 1;
     const step = 80;
@@ -327,7 +364,6 @@
       ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
     }
 
-    // Conectar partículas cercanas
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -353,3 +389,4 @@
 
 </body>
 </html>
+
