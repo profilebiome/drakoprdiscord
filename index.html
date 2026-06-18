@@ -3,308 +3,337 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SERVER DRAKO | Comunidad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <title>Comunidad Musical</title>
+  <!-- Tipografías: Bebas Neue para el estilo urbano de los botones, Syne para otros textos artísticos e Inter para lectura limpia -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #060608;
-      --bg2:       #0d0d14;
-      --purple:    #5865F2;
-      --violet:    #9C84EF;
-      --glow:      #7289DA;
-      --deep:      #1a1a2e;
-      --border:    rgba(88,101,242,0.15);
-      --text:      #e8eaf6;
-      --muted:     #8b8fa8;
-      --white:     #ffffff;
+      --bg-space:  #030107; /* Violeta ultra oscuro base */
+      --violet-glow: #6a0dad;
+      --violet-dark: #120224;
+      --white: #ffffff;
+      --black: #000000;
+      --red-live: #ff0033;
+      --text-muted: rgba(255, 255, 255, 0.75);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg-space);
+      color: var(--white);
       min-height: 100vh;
       overflow-x: hidden;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* ── FONDO ANIMADO CANVAS (INTACTO) ── */
+    /* ── NEBULOSAS DE FONDO OSCURO ── */
+    .nebula {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(140px);
+      z-index: 0;
+      pointer-events: none;
+      animation: float 12s infinite ease-in-out alternate;
+    }
+    .nebula-1 {
+      width: 45vw; height: 45vw;
+      background: var(--violet-glow);
+      top: -10%; left: -5%;
+      opacity: 0.12;
+    }
+    .nebula-2 {
+      width: 55vw; height: 55vw;
+      background: #25033f;
+      bottom: -20%; right: -5%;
+      opacity: 0.15;
+      animation-delay: -6s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(40px) scale(1.05); }
+    }
+
+    /* ── FONDO ANIMADO CANVAS (EFECTOS BLANCO/NEGRO/VIOLETA) ── */
     #bg-canvas {
       position: fixed;
       inset: 0;
-      z-index: 0;
+      z-index: 1;
       pointer-events: none;
     }
 
-    /* ── SECCIÓN PRINCIPAL (HERO MODERNO) ── */
+    /* ── CONTENEDOR PRINCIPAL CENTRAL ── */
     .hero {
       position: relative;
-      z-index: 1;
-      flex: 1;
+      z-index: 2;
+      width: 100%;
+      max-width: 480px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+    }
+
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      width: 100%;
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECCIÓN DE FOTO DE PERFIL (DISCORD PROFILE CON BORDE VIOLETA/BLANCO PRENDIDO) ── */
+    .profile-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: -4px;
+    }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      /* Color Blurple oficial interno combinado con un borde de gradiente fusionado Violeta y Blanco */
+      background: linear-gradient(#5865F2, #5865F2) padding-box, 
+                  linear-gradient(135deg, #ffffff, var(--violet-glow), #ffffff) border-box;
+      border: 3px solid transparent; 
+      border-radius: 50%;
+      display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 60px clamp(1.5rem, 6vw, 4rem);
+      padding: 22px;
+      /* Efecto de iluminación/prende fusionando blanco y violeta */
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 
+                  0 0 40px rgba(106, 13, 173, 0.8), 
+                  0 12px 40px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
     }
 
-    /* ── ECUALIZADOR ANIMADO ── */
-    .eq-wrap {
-      display: flex;
-      align-items: flex-end;
-      gap: 6px;
-      height: 60px;
-      margin: 2rem 0 1.5rem 0;
-      animation: fadeDown 0.8s 0.3s ease both;
+    .profile-avatar:hover {
+      transform: scale(1.08);
+      /* Intensifica el brillo al pasar el cursor */
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 
+                  0 0 55px rgba(106, 13, 173, 1), 
+                  0 12px 45px rgba(0, 0, 0, 0.8);
     }
 
-    .eq-bar {
-      width: 6px;
-      border-radius: 4px;
-      background: linear-gradient(to top, var(--purple), var(--violet));
-      animation: eq var(--d, 0.9s) ease-in-out infinite alternate;
-      box-shadow: 0 0 12px rgba(88,101,242,0.4);
-    }
-
-    @keyframes eq {
-      from { height: 10px; opacity: 0.5; }
-      to   { height: var(--h, 40px); opacity: 1; }
-    }
-
-    /* ── ESTILO URBANO PROFESIONAL ── */
-    .urban-header {
-      font-family: 'Space Grotesk', sans-serif;
-      color: var(--white);
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      animation: fadeDown 0.8s 0.35s ease both;
-      user-select: none;
-    }
-
-    .urban-header .main-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 0.95;
-      display: block;
-    }
-
-    /* ── BOTÓN DE ACCIÓN (CTA) MODIFICADO ── */
-    .cta-wrap {
-      margin-top: 0.5rem;
-      margin-bottom: 4rem;
-      animation: fadeDown 0.8s 0.4s ease both;
-    }
-
-    .btn-cta {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #5865F2, #9C84EF);
-      color: #fff;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem; /* Más pequeño */
-      padding: 12px 28px; /* Más pequeño */
-      border-radius: 12px; /* Más compacto */
-      text-decoration: none;
-      border: 2px solid #210042; /* Borde violeta oscuro inicial */
-      box-shadow: 0 0 15px rgba(33, 0, 66, 0.4), 0 6px 16px rgba(0,0,0,0.4);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      overflow: hidden;
-      animation: parpadeoBorde 1.5s infinite ease-in-out; /* Parpadeo del borde */
-    }
-
-    /* Animación de parpadeo violeta oscuro */
-    @keyframes parpadeoBorde {
-      0%, 100% {
-        border-color: #210042;
-        box-shadow: 0 0 8px rgba(33, 0, 66, 0.5), 0 6px 16px rgba(0,0,0,0.4);
-      }
-      50% {
-        border-color: #5d00b8; /* Enciende a violeta oscuro vibrante */
-        box-shadow: 0 0 20px rgba(93, 0, 184, 0.8), 0 6px 16px rgba(0,0,0,0.4);
-      }
-    }
-
-    .btn-cta::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .btn-cta:hover { 
-      transform: translateY(-3px); 
-    }
-    .btn-cta:hover::after { opacity: 1; }
-    .btn-cta:active { transform: translateY(0); }
-
-    .btn-cta svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; position: relative; z-index: 2; }
-    .btn-cta span { position: relative; z-index: 2; letter-spacing: 0.5px; }
-
-    /* ── RECUADROS DE ACTIVIDADES (GRID URBANO) ── */
-    .features-grid {
-      max-width: 1200px;
+    .profile-avatar svg {
       width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 20px 0;
-      animation: fadeDown 1s 0.5s ease both;
+      height: 100%;
+      fill: var(--white);
     }
 
+    /* ── TARJETAS DE CONTENIDO WEB PROFESIONAL ── */
     .feature-card {
-      background: rgba(13, 13, 20, 0.4);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      padding: 30px 24px;
+      background: rgba(4, 1, 10, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 20px;
-      text-align: left;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 22px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      align-items: center;
+      gap: 16px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease;
     }
 
     .feature-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(156, 132, 239, 0.5);
-      background: rgba(20, 20, 30, 0.6);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(88,101,242,0.15);
+      transform: translateY(-4px);
+      border-color: rgba(138, 43, 226, 0.4);
     }
 
-    .feature-icon {
-      width: 44px;
-      height: 44px;
-      background: rgba(88, 101, 242, 0.12);
-      border-radius: 12px;
+    /* ── BOTONES PRINCIPALES (LETRA URBANA BEBAS NUEUE) ── */
+    .btn-cta {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--violet);
-      transition: all 0.3s ease;
-    }
-
-    .feature-card:hover .feature-icon {
-      background: var(--purple);
+      gap: 14px;
       color: var(--white);
-      transform: scale(1.05);
-    }
-
-    .feature-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: var(--white);
+      font-family: 'Bebas Neue', sans-serif; /* Nueva tipografía urbana */
+      font-size: 1.6rem; /* Ajustado el tamaño para la nueva tipografía */
+      letter-spacing: 2px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      padding: 10px 30px;
+      width: 100%;
+      border-radius: 14px;
+      text-decoration: none;
+      z-index: 1;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
     }
 
-    .feature-card p {
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.5;
+    /* Borde líquido minimalista (Blanco, Violeta, Negro) */
+    .btn-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      padding: 1.5px; /* Grosor del borde */
+      background: linear-gradient(90deg, rgba(255,255,255,0.4), var(--violet-glow), rgba(0,0,0,0.8), rgba(255,255,255,0.4));
+      background-size: 200% auto;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      transition: background-position 0.5s ease;
     }
 
-    /* ── ANIMACIONES DE ELEMENTOS ── */
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* Fondo oscuro interno */
+    .btn-cta::after {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      background: linear-gradient(135deg, #090314, #020005);
+      border-radius: 13px;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-cta:hover::before {
+      background-position: right center;
+    }
+
+    .btn-cta:hover {
+      box-shadow: 0 12px 24px rgba(106, 13, 173, 0.3);
+      transform: scale(1.01);
+    }
+
+    .btn-cta svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--white);
+      transition: transform 0.3s ease;
+    }
+
+    .btn-cta:hover svg {
+      transform: scale(1.1) rotate(-3deg);
+    }
+
+    /* ── FILA DE DESCRIPCIÓN Y BOTÓN LIVE ── */
+    .info-wrapper {
+      display: flex;
+      flex-direction: column; 
+      align-items: center;
+      justify-content: center;
+      gap: 10px; 
+      width: 100%;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* ── BOTÓN ROJO PARPADEANDO (LIVE) ── */
+    .btn-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--red-live);
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 6px;
+      border: none;
+      box-shadow: 0 0 12px rgba(255, 0, 51, 0.4);
+      animation: livePulse 1.6s infinite ease-in-out;
+      cursor: pointer;
+    }
+
+    .btn-live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background-color: var(--white);
+      border-radius: 50%;
+    }
+
+    @keyframes livePulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 12px rgba(255, 0, 51, 0.5);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.04);
+        box-shadow: 0 0 20px rgba(255, 0, 51, 0.85);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 12px rgba(255, 0, 51, 0.5);
+        opacity: 0.9;
+      }
     }
   </style>
 </head>
 <body>
 
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+
+<!-- Canvas con red e interconexiones de partículas Blanco/Negro/Violeta -->
 <canvas id="bg-canvas"></canvas>
 
 <section class="hero">
-
-  <div class="eq-wrap" aria-hidden="true">
-    <div class="eq-bar" style="--h:22px;--d:0.7s"></div>
-    <div class="eq-bar" style="--h:38px;--d:0.9s"></div>
-    <div class="eq-bar" style="--h:50px;--d:1.1s"></div>
-    <div class="eq-bar" style="--h:34px;--d:0.8s"></div>
-    <div class="eq-bar" style="--h:46px;--d:1.3s"></div>
-    <div class="eq-bar" style="--h:28px;--d:0.65s"></div>
-    <div class="eq-bar" style="--h:52px;--d:1.0s"></div>
-    <div class="eq-bar" style="--h:40px;--d:0.85s"></div>
-    <div class="eq-bar" style="--h:30px;--d:1.2s"></div>
-    <div class="eq-bar" style="--h:48px;--d:0.75s"></div>
-    <div class="eq-bar" style="--h:20px;--d:0.95s"></div>
-    <div class="eq-bar" style="--h:42px;--d:1.15s"></div>
-  </div>
-
-  <header class="urban-header">
-    <span class="main-title">DRAKO SERVER</span>
-  </header>
-
-  <div class="cta-wrap">
-    <a href="https://discord.gg/AeMkphYHz" target="_blank" class="btn-cta">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 245 240">
-        <path d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zm36.5 0c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"/>
-        <path d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-.9 20.2-.1 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z"/>
-      </svg>
-      <span>DISCORD</span>
-    </a>
-  </div>
-
-  <!-- ── RECUADROS DE CONTENIDO ── -->
-  <div class="features-grid">
+  <div class="main-container">
     
-    <!-- Tarjeta 1 -->
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 19v4M8 23h8"/></svg>
+    <!-- LOGO DE PERFIL DISCORD (CON BORDE FUSIONADO QUE PRENDE) -->
+    <div class="profile-container">
+      <div class="profile-avatar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36">
+          <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.4,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a74.37,74.37,0,0,0,6.72-10.93,68.6,68.6,0,0,1-10.64-5.12c.91-.67,1.81-1.37,2.65-2.1a75.22,75.22,0,0,0,72.78,0c.84.73,1.74,1.43,2.65,2.1a68.86,68.86,0,0,1-10.64,5.12,74.74,74.74,0,0,0,6.72,10.93,105.73,105.73,0,0,0,31.05-18.83C129.74,50.19,123.89,27.37,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.93,46,53.84,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.17,46,96.08,53,91,65.69,84.69,65.69Z"/>
+        </svg>
       </div>
-      <h3>STREAMS</h3>
-      <p>Sesiones de producción en tiempo real. Observa, aprende e interactúa en el proceso creativo directo.</p>
+    </div>
+    
+    <!-- TARJETA PRODUCTORES -->
+    <div class="feature-card">
+      <a href="https://discord.gg/AeMkphYHz" target="_blank" class="btn-cta">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 245 240">
+          <path d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zm36.5 0c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"/>
+          <path d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-.9 20.2-.1 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z"/>
+        </svg>
+        <span>Productores</span>
+      </a>
+      <div class="info-wrapper">
+        <span class="description">Secciones Live con Productores</span>
+        <button class="btn-live" aria-label="En vivo ahora">Live</button>
+      </div>
     </div>
 
-    <!-- Tarjeta 2 -->
+    <!-- TARJETA ARTISTAS -->
     <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2zM12 11v6M9 14l3-3 3 3"/></svg>
+      <a href="https://discord.gg/zRMUVvk6Z" target="_blank" class="btn-cta">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 245 240">
+          <path d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zm36.5 0c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"/>
+          <path d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-.9 20.2-.1 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z"/>
+        </svg>
+        <span>Artistas</span>
+      </a>
+      <div class="info-wrapper">
+        <span class="description">Secciones Live con Artistas</span>
+        <button class="btn-live" aria-label="En vivo ahora">Live</button>
       </div>
-      <h3>RECURSOS</h3>
-      <p>Intercambio constante de Drum Kits, Sample Packs, Presets exclusivos y herramientas avanzadas de ingeniería.</p>
-    </div>
-
-    <!-- Tarjeta 3 -->
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      </div>
-      <h3>Feedback Colectivo</h3>
-      <p>Sube tus proyectos y demos para recibir críticas profesionales e ideas constructivas de otros productores.</p>
-    </div>
-
-    <!-- Tarjeta 4 -->
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <h3>Colaboraciones</h3>
-      <p>Conecta con otros beatmakers, ingenieros, compositores y artistas para fusionar estilos y lanzar nuevos proyectos.</p>
-    </div>
-
-    <!-- Tarjeta 5 -->
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM14.5 9.5a2.5 2.5 0 0 0-5 0v5a2.5 2.5 0 0 0 5 0"/></svg>
-      </div>
-      <h3>Registro & Regalías</h3>
-      <p>Asesoramiento e información clara para registrar tus obras musicales de manera correcta y maximizar tus ingresos.</p>
     </div>
 
   </div>
@@ -323,14 +352,19 @@
   resize();
   window.addEventListener('resize', resize);
 
-  const COLORS = ['rgba(88,101,242,', 'rgba(156,132,239,', 'rgba(114,137,218,'];
+  const COLORS = [
+    'rgba(255, 255, 255,', 
+    'rgba(138, 43, 226,', 
+    'rgba(25, 10, 45,', 
+    'rgba(180, 140, 255,'
+  ];
 
   class Particle {
     constructor() { this.reset(); }
     reset() {
       this.x  = Math.random() * W;
       this.y  = Math.random() * H;
-      this.r  = Math.random() * 1.8 + 0.4;
+      this.r  = Math.random() * 2 + 0.5;
       this.vx = (Math.random() - 0.5) * 0.3;
       this.vy = (Math.random() - 0.5) * 0.3;
       this.a  = Math.random() * 0.5 + 0.1;
@@ -349,14 +383,14 @@
     }
   }
 
-  for (let i = 0; i < 120; i++) particles.push(new Particle());
+  for (let i = 0; i < 110; i++) particles.push(new Particle());
 
   function loop() {
     ctx.clearRect(0, 0, W, H);
 
-    ctx.strokeStyle = 'rgba(88,101,242,0.04)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.012)';
     ctx.lineWidth = 1;
-    const step = 80;
+    const step = 120;
     for (let x = 0; x < W; x += step) {
       ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
     }
@@ -369,12 +403,12 @@
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
+        if (dist < 140) {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(88,101,242,${0.07 * (1 - dist / 120)})`;
-          ctx.lineWidth = 0.8;
+          ctx.strokeStyle = `rgba(138, 43, 226, ${0.07 * (1 - dist / 140)})`;
+          ctx.lineWidth = 0.6;
           ctx.stroke();
         }
       }
