@@ -84,7 +84,7 @@
     .main-container {
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 32px; /* Ligeramente más separado para balancear la falta de recuadros */
       width: 100%;
       animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
@@ -99,7 +99,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: -4px;
+      margin-bottom: 8px;
     }
 
     .profile-avatar {
@@ -135,27 +135,22 @@
       fill: var(--white);
     }
 
-    /* ── TARJETAS DE CONTENIDO WEB PROFESIONAL ── */
+    /* ── CONTENEDOR DE CADA BLOQUE (Recuadros eliminados) ── */
     .feature-card {
-      background: rgba(4, 1, 10, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 20px;
-      padding: 22px;
+      /* Mantiene la estructura pero sin fondos, bordes ni sombras */
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease;
+      gap: 14px;
+      width: 100%;
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .feature-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(138, 43, 226, 0.4);
     }
 
-    /* ── BOTONES PRINCIPALES (LETRA URBANA BEBAS NUEUE) ── */
+    /* ── BOTONES PRINCIPALES (MISMO TAMAÑO EXACTO) ── */
     .btn-cta {
       position: relative;
       display: flex;
@@ -163,12 +158,12 @@
       justify-content: center;
       gap: 14px;
       color: var(--white);
-      font-family: 'Bebas Neue', sans-serif; /* Nueva tipografía urbana */
-      font-size: 1.6rem; /* Ajustado el tamaño para la nueva tipografía */
+      font-family: 'Bebas Neue', sans-serif; 
+      font-size: 1.6rem; 
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 10px 30px;
       width: 100%;
+      height: 65px; /* Forzamos que ambos botones sean idénticos en tamaño */
       border-radius: 14px;
       text-decoration: none;
       z-index: 1;
